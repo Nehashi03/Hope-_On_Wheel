@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hope On Wheel - Emergency Ambulance Service</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root
+    {
+      --primary-color: #dc3545;
+      --secondary-color: #0056b3;
+      --light-bg: #f8f9fa;
+      --dark-text: #212529;
+      --border-color: #dee2e6;
+      --success-color: #28a745;
+      --warning-color: #ffc107;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body
+    {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--dark-text);
+      background-color: #fff;
+      overflow-x: hidden;
+    }
+
+
+    /*KEYFRAME ANIMATIONS*/
+    @keyframes slideInFromLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInFromRight {
+      from {
+        opacity: 0;
+        transform: translateX(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInFromTop {
+      from {
+        opacity: 0;
+        transform: translateY(-100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInFromBottom {
+      from {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes zoomIn {
+      from {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      25% {
+        transform: scale(1.1);
+      }
+      50% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
+      }
+      100% {
+        background-position: 1000px 0;
+      }
+    }
+
+    @keyframes rotateArrow {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      50% {
+        transform: rotate(-10deg);
+      }
+    }
+
+    /* NAVIGATION*/
+    nav {
+      background-color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      animation: slideInFromTop 0.6s ease-out;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideInFromLeft 0.6s ease-out;
+    }
+
+    .logo::before {
+      content: "🚑";
+      font-size: 32px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+      animation: slideInFromTop 0.7s ease-out;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--dark-text);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--primary-color);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    nav a:hover {
+      color: var(--primary-color);
+    }
+
+    .auth-links {
+      display: flex;
+      gap: 15px;
+      animation: slideInFromRight 0.6s ease-out;
+    }
+
+    .btn-login {
+      padding: 8px 20px;
+      background-color: var(--secondary-color);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-login:hover {
+      background-color: #004085;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 86, 179, 0.3);
+    }
+
+    /*HERO SECTION*/
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #c82333 100%);
+      color: white;
+      padding: 100px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+              radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .hero-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      animation: slideInFromBottom 0.8s ease-out 0.2s backwards;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 40px;
+      opacity: 0.95;
+      animation: slideInFromBottom 0.8s ease-out 0.4s backwards;
+    }
+
+    .emergency-btn {
+      background-color: #ffc107;
+      color: #000;
+      padding: 16px 40px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      animation: slideInFromBottom 0.8s ease-out 0.6s backwards, pulse 2s ease-in-out 1.5s infinite;
+      position: relative;
+    }
+
+    .emergency-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      animation: shimmer 2s infinite;
+      background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+    }
+
+    .emergency-btn:hover {
+      background-color: #ffb300;
+      transform: scale(1.08);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .emergency-btn:active {
+      transform: scale(0.95);
+    }
+
+    /*  BOOKING SECTION*/
+    .booking-section {
+      background-color: var(--light-bg);
+      padding: 80px 20px;
+      position: relative;
+    }
+
+    .booking-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+              radial-gradient(circle at 0% 0%, rgba(220, 53, 69, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 100% 100%, rgba(0, 86, 179, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .booking-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .booking-container h2 {
+      font-size: 36px;
+      margin-bottom: 50px;
+      text-align: center;
+      color: var(--dark-text);
+      animation: slideInFromTop 0.8s ease-out;
+    }
+
+    .booking-form {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      margin: 0 auto;
+      animation: slideInFromBottom 0.8s ease-out;
+      border-top: 4px solid var(--primary-color);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark-text);
+      transition: all 0.3s ease;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--border-color);
+      border-radius: 5px;
+      font-size: 16px;
+      font-family: inherit;
+      transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.2);
+      transform: scale(1.02);
+    }
+
+    .form-group input:hover,
+    .form-group select:hover,
+    .form-group textarea:hover {
+      border-color: var(--primary-color);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary-color) 0%, #c82333 100%);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: slideInFromBottom 0.8s ease-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.2);
+      transition: left 0.3s ease;
+    }
+
+    .btn-submit:hover::before {
+      left: 100%;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #c82333 0%, var(--primary-color) 100%);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+    }
+
+    .btn-submit:active {
+      transform: translateY(-1px);
+    }
+
+    /*SERVICES SECTION */
+    .services-section {
+      padding: 80px 20px;
+      background: white;
+    }
+
+    .services-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .services-container h2 {
+      font-size: 36px;
+      margin-bottom: 50px;
+      text-align: center;
+      animation: slideInFromTop 0.8s ease-out;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .service-card {
+      background: var(--light-bg);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-top: 4px solid var(--primary-color);
+      animation: slideInFromBottom 0.8s ease-out;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(220, 53, 69, 0.1), transparent);
+      transition: left 0.4s ease;
+    }
+
+    .service-card:hover::before {
+      left: 100%;
+    }
+
+    .service-card:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+      border-top-color: #ffc107;
+    }
+
+    .service-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      animation: bounce 2s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover .service-icon {
+      font-size: 56px;
+      animation: heartbeat 0.6s ease-in-out;
+    }
+
+    .service-card h3 {
+      margin-bottom: 15px;
+      color: var(--dark-text);
+      font-size: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .service-card:hover h3 {
+      color: var(--primary-color);
+    }
+
+    .service-card p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.8;
+      transition: all 0.3s ease;
+    }
+
+    /* WHY US SECTION  */
+    .why-us-section {
+      background: linear-gradient(135deg, var(--secondary-color) 0%, #003d7a 100%);
+      color: white;
+      padding: 80px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-us-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+              radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .why-us-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .why-us-container h2 {
+      font-size: 36px;
+      margin-bottom: 50px;
+      text-align: center;
+      animation: slideInFromTop 0.8s ease-out;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 20px;
+      animation: slideInFromLeft 0.8s ease-out;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .feature-item:hover {
+      transform: translateX(10px);
+    }
+
+    .feature-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+      animation: pulse 2s ease-in-out infinite;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover .feature-icon {
+      animation: spin 0.6s ease-in-out;
+      font-size: 40px;
+    }
+
+    .feature-item h3 {
+      margin-bottom: 10px;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-item:hover h3 {
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-item p {
+      opacity: 0.95;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    /*TESTIMONIALS SECTION*/
+    .testimonials-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
+    }
+
+    .testimonials-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testimonials-container h2 {
+      font-size: 36px;
+      margin-bottom: 50px;
+      text-align: center;
+      animation: slideInFromTop 0.8s ease-out;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    .testimonial-card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      animation: zoomIn 0.8s ease-out;
+      transition: all 0.3s ease;
+      border-left: 4px solid var(--success-color);
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .stars {
+      color: #ffc107;
+      margin-bottom: 15px;
+      font-size: 16px;
+      animation: slideInFromLeft 0.6s ease-out;
+    }
+
+    .testimonial-text {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.8;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      color: var(--dark-text);
+      animation: slideInFromBottom 0.6s ease-out;
+    }
+
+    /*STATS SECTION */
+    .stats-section {
+      background: linear-gradient(135deg, var(--primary-color) 0%, #c82333 100%);
+      color: white;
+      padding: 60px 20px;
+    }
+
+    .stats-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+
+    .stat-item {
+      animation: slideInFromBottom 0.8s ease-out;
+    }
+
+    .stat-number {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      animation: slideInFromLeft 0.8s ease-out;
+    }
+
+    .stat-label {
+      font-size: 16px;
+      opacity: 0.95;
+    }
+
+    /*FOOTER */
+    footer {
+      background-color: #212529;
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+      animation: slideInFromBottom 0.8s ease-out;
+    }
+
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .footer-section {
+      animation: slideInFromBottom 0.8s ease-out;
+    }
+
+    .footer-section h4 {
+      margin-bottom: 15px;
+      color: var(--primary-color);
+      animation: slideInFromLeft 0.6s ease-out;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+      animation: slideInFromLeft 0.6s ease-out;
+    }
+
+    .footer-section a {
+      color: #ccc;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-section a:hover {
+      color: white;
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #444;
+      padding-top: 20px;
+      font-size: 14px;
+      opacity: 0.8;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    /*MODAL STYLES*/
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      animation: fadeIn 0.3s;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 40px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      animation: slideDown 0.4s ease-out;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-btn {
+      color: #999;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+      color: #000;
+      transform: rotate(90deg);
+    }
+
+    /*SCROLL TO TOP BUTTON */
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: var(--primary-color);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      transition: all 0.3s ease;
+      z-index: 99;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      animation: slideInFromBottom 0.6s ease-out;
+    }
+
+    .scroll-top-btn:hover {
+      background-color: #c82333;
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .scroll-top-btn.show {
+      display: flex;
+    }
+
+    /*NOTIFICATION TOAST*/
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--success-color);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 5px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      animation: slideInFromRight 0.4s ease-out;
+      z-index: 1001;
+      max-width: 300px;
+    }
+
+    .toast.error {
+      background-color: var(--primary-color);
+    }
+
+    .toast.warning {
+      background-color: var(--warning-color);
+      color: #000;
+    }
+
+    /*LOADING SPINNER*/
+    .spinner {
+      border: 4px solid var(--light-bg);
+      border-top: 4px solid var(--primary-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+    }
+
+    /*RESPONSIVE DESIGN*/
+    @media (max-width: 768px) {
+      .nav-container {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 20px;
+        gap: 15px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-section a:hover {
+        transform: none;
+      }
+
+      .booking-form {
+        padding: 25px;
+      }
+
+      .scroll-top-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 22px;
+      }
+
+      .booking-form {
+        padding: 20px;
+      }
+
+      .services-container h2,
+      .why-us-container h2 {
+        font-size: 28px;
+      }
+
+      nav ul {
+        gap: 8px;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- Navigation -->
+<nav>
+  <div class="nav-container">
+    <div class="logo">MedRide</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#booking">Book Now</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="auth-links">
+      <a href="/login" class="btn-login">Login</a>
+      <a href="/register" class="btn-login">Sign Up</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-container">
+    <h1>Emergency Ambulance Service At Your Doorstep</h1>
+    <p>24/7 Professional Medical Transportation - Fast, Safe & Reliable</p>
+    <button class="emergency-btn" onclick="openBookingModal()">🚨 BOOK AMBULANCE NOW</button>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="stats-container">
+    <div class="stat-item">
+      <div class="stat-number">50K+</div>
+      <div class="stat-label">Lives Saved</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5 Min</div>
+      <div class="stat-label">Avg Response Time</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">98%</div>
+      <div class="stat-label">Success Rate</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">24/7</div>
+      <div class="stat-label">Always Available</div>
+    </div>
+  </div>
+</section>
+
+<!-- Quick Booking Form -->
+<section class="booking-section" id="booking">
+  <div class="booking-container">
+    <h2>Quick Emergency Booking</h2>
+    <form class="booking-form" th:action="@{/ambulance/book}" method="POST" id="bookingForm">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="patientName">Patient Name *</label>
+          <input type="text" id="patientName" name="patientName" placeholder="Enter patient name" required>
+        </div>
+        <div class="form-group">
+          <label for="patientPhone">Phone Number *</label>
+          <input type="tel" id="patientPhone" name="patientPhone" placeholder="Enter phone number" pattern="[0-9]{10}" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="pickupAddress">Pickup Address *</label>
+          <input type="text" id="pickupAddress" name="pickupAddress" placeholder="Enter exact location" required>
+        </div>
+        <div class="form-group">
+          <label for="hospital">Destination Hospital *</label>
+          <select id="hospital" name="hospital" required>
+            <option value="">Select Hospital</option>
+            <option value="National_Hospital">National Hospital, Colombo</option>
+            <option value="Colombo_Hospital">Colombo Hospital</option>
+            <option value="Peradeniya_Hospital">University of Peradeniya Teaching Hospital</option>
+            <option value="Kandy_Hospital">Kandy Hospital</option>
+            <option value="Galle_Hospital">Galle Hospital</option>
+            <option value="Other">Other Hospital</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="emergencyType">Emergency Type </label>
+          <select id="emergencyType" name="emergencyType" required>
+            <option value="">Select Type</option>
+            <option value="Accident">Accident/Trauma</option>
+            <option value="Medical">Medical Emergency</option>
+            <option value="Cardiac">Cardiac Emergency</option>
+            <option value="Stroke">Stroke</option>
+            <option value="Childbirth">Childbirth</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="patientAge">Patient Age</label>
+          <input type="number" id="patientAge" name="patientAge" min="0" max="120" placeholder="Age">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Additional Medical Details</label>
+        <textarea id="description" name="description" rows="4" placeholder="Any allergies, medications, or special conditions..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit">Request Ambulance Now</button>
+    </form>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section" id="services">
+  <div class="services-container">
+    <h2>Our Premium Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🚑</div>
+        <h3>Emergency Response</h3>
+        <p>Swift response to medical emergencies with trained paramedics available 24/7 365 days a year</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👨‍⚕</div>
+        <h3>Trained Paramedics</h3>
+        <p>Our team consists of certified paramedics and medical professionals with extensive training</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚕</div>
+        <h3>Advanced Equipment</h3>
+        <p>Equipped with latest medical devices and state-of-the-art life-support systems</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>Real-time Tracking</h3>
+        <p>Track your ambulance location in real-time through our mobile app and web platform</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💰</div>
+        <h3>Transparent Pricing</h3>
+        <p>No hidden charges - get instant quotes before confirmation with flexible payment options</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔒</div>
+        <h3>Patient Privacy</h3>
+        <p>Complete confidentiality guaranteed - HIPAA compliant with encrypted medical records</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="why-us-section">
+  <div class="why-us-container">
+    <h2>Why Choose Hope On Wheel ?</h2>
+    <div class="features-grid">
+      <div class="feature-item">
+        <div class="feature-icon">⚡</div>
+        <div>
+          <h3>Lightning Fast</h3>
+          <p>Average response time under 5 minutes in urban areas with rapid deployment</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📍</div>
+        <div>
+          <h3>GPS Enabled</h3>
+          <p>Advanced GPS technology for accurate location tracking and optimal route planning</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">✅</div>
+        <div>
+          <h3>Verified Drivers</h3>
+          <p>All drivers are thoroughly background checked and professionally trained certified staff</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">💬</div>
+        <div>
+          <h3>24/7 Support</h3>
+          <p>Customer support available round the clock via phone, email and live chat</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🚑</div>
+        <div>
+          <h3>Modern Fleet</h3>
+          <p>Well-maintained ambulances with cutting-edge medical equipment and technology</p>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📞</div>
+        <div>
+          <h3>Easy Booking</h3>
+          <p>Simple one-click booking through web portal or mobile app in multiple languages</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <h2>What Our Customers Say</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Hope On Wheel  saved my father's life! The ambulance arrived in just 4 minutes and the paramedics were incredibly professional and caring."</p>
+        <p class="testimonial-author">- Mr. Silva, Colombo</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Excellent service! I was in a serious accident and MedRide responded immediately. Thank you for being there when I needed you most."</p>
+        <p class="testimonial-author">- Ms. Jayasinghe, Kandy</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">"Very reliable and professional team. The real-time tracking feature is amazing. Highly recommended for emergency medical transport."</p>
+        <p class="testimonial-author">- Dr. Perera, Galle</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<!-- Scroll to Top Button -->
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">↑</button>
+
+<!-- Toast Notification -->
+<div id="toast" class="toast" style="display: none;"></div>
+
+<script>
+  //SCROLL TO TOP FUNCTIONALITY
+  const scrollTopBtn = document.getElementById('scrollTopBtn');
+
+  window.addEventListener('scroll', () => {
+    if (window.pageYOffset > 300) {
+      scrollTopBtn.classList.add('show');
+    } else {
+      scrollTopBtn.classList.remove('show');
+    }
+  });
+
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+
+  //TOAST NOTIFICATION
+  function showToast(message, type = 'success', duration = 3000) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.className = 'toast {type}';
+    toast.style.display = 'block';
+
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, duration);
+  }
+
+  //BOOKING FORM HANDLER
+  document.getElementById('bookingForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const patientName = document.getElementById('patientName').value.trim();
+    const patientPhone = document.getElementById('patientPhone').value.trim();
+    const pickupAddress = document.getElementById('pickupAddress').value.trim();
+    const hospital = document.getElementById('hospital').value;
+    const emergencyType = document.getElementById('emergencyType').value;
+
+    // Validation
+    if (!patientName) {
+      showToast('Please enter patient name', 'error');
+      return false;
+    }
+
+    if (!patientPhone || patientPhone.length !== 10) {
+      showToast('Please enter a valid 10-digit phone number', 'error');
+      return false;
+    }
+
+    if (!pickupAddress) {
+      showToast('Please enter pickup address', 'error');
+      return false;
+    }
+
+    if (!hospital) {
+      showToast('Please select a destination hospital', 'error');
+      return false;
+    }
+
+    if (!emergencyType) {
+      showToast('Please select emergency type', 'error');
+      return false;
+    }
+
+    // Show loading state
+    const submitBtn = document.querySelector('.btn-submit');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Processing...';
+    submitBtn.disabled = true;
+
+    // Simulate form submission
+    setTimeout(() => {
+      showToast('✓ Ambulance request received! Our team is on the way.', 'success', 5000);
+      document.getElementById('bookingForm').reset();
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+
+      // Scroll to top
+      scrollToTop();
+    }, 2000);
+
+    // For production, use actual form submission:
+    // this.submit();
+  });
+
+  // OPEN BOOKING MODAL
+  function openBookingModal() {
+    document.querySelector('#booking').scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    // Focus on first input
+    setTimeout(() => {
+      document.getElementById('patientName').focus();
+    }, 500);
+  }
+
+  //SMOOTH SCROLL FOR ANCHOR LINKS
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      const href = this.getAttribute('href');
+      if (href !== '#') {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+
+  // FORM INPUT EFFECTS
+  const inputs = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+
+  inputs.forEach(input => {
+    input.addEventListener('focus', function() {
+      this.parentElement.style.animation = 'slideInFromLeft 0.3s ease-out';
+    });
+
+    input.addEventListener('blur', function() {
+      if (this.value.trim() !== '') {
+        this.style.borderColor = '#28a745';
+      }
+    });
+  });
+
+  //ANIMATE ELEMENTS ON SCROLL
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+  };
+
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = entry.target.getAttribute('data-animation') || 'fadeIn 0.6s ease-out forwards';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.service-card, .feature-item, .testimonial-card').forEach(el => {
+    observer.observe(el);
+  });
+
+  //ACTIVE NAVIGATION LINK
+  window.addEventListener('scroll', () => {
+    let current = '';
+    const sections = document.querySelectorAll('section');
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      if (pageYOffset >= sectionTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#${current}') {
+        link.style.color = 'var(--primary-color)';
+      } else {
+        link.style.color = 'var(--dark-text)';
+      }
+    });
+  });
+
+  // PHONE NUMBER FORMATTING
+  document.getElementById('patientPhone').addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length > 10) {
+      value = value.slice(0, 10);
+    }
+    e.target.value = value;
+  });
+
+  //PAGE LOAD ANIMATION
+  window.addEventListener('load', () => {
+    document.body.style.opacity = '1';
+    console.log('MedRide Emergency Ambulance Service - Ready to help!');
+  });
+
+  //KEYBOARD SHORTCUT
+  document.addEventListener('keydown', (e) => {
+    // Press '/' to focus on booking form
+    if (e.key === '/' && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      document.getElementById('patientName').focus();
+      showToast('Focus on patient name field', 'warning', 2000);
+    }
+  });
+
+  // RANDOM EMERGENCY STAT COUNTER
+  function animateCounter(element, target, duration = 2000) {
+    let current = 0;
+    const increment = target / (duration / 16);
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
+      }
+      element.textContent = Math.floor(current).toLocaleString() + (element.textContent.includes('+') ? '+' : '');
+    }, 16);
+  }
+
+  // Initialize counters when stats section is visible
+  const statsSection = document.querySelector('.stats-section');
+  if (statsSection) {
+    const observer2 = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        document.querySelectorAll('.stat-number').forEach(el => {
+          const text = el.textContent;
+          const number = parseInt(text.replace(/[^\d]/g, ''));
+          animateCounter(el, number);
+        });
+        observer2.unobserve(statsSection);
+      }
+    });
+    observer2.observe(statsSection);
+  }
+
+  //  DARK MODE TOGGLE (Optional)
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark-mode');
+    localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+  }
+
+  // Load saved dark mode preference
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+  }
+</script>
+</body>
+</html>                                                 this code shows some errors find them

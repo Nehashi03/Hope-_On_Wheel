@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Registration - Hope On Wheel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated Background */
+    .bg-animation {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .float-icon {
+      position: absolute;
+      font-size: 50px;
+      opacity: 0.1;
+      animation: float 8s ease-in-out infinite;
+    }
+    .icon-1 { top: 10%; left: 10%; animation-delay: 0s; }
+    .icon-2 { top: 60%; right: 15%; animation-delay: 2s; }
+    .icon-3 { bottom: 20%; left: 20%; animation-delay: 4s; }
+    .icon-4 { top: 40%; right: 25%; animation-delay: 6s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(-5deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
+    /* Back Button */
+    .back-btn {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+    }
+
+    /* Main Container */
+    .register-container {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 30px;
+      padding: 50px 40px;
+      max-width: 500px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      animation: slideUp 0.6s ease;
+    }
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .logo-icon {
+      font-size: 70px;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .title {
+      font-size: 32px;
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 16px;
+      color: #666;
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 15px 20px;
+      border: 2px solid #e0e0e0;
+      border-radius: 15px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    }
+    .input-icon {
+      position: absolute;
+      right: 20px;
+      top: 43px;
+      font-size: 20px;
+      color: #999;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      margin-top: 10px;
+    }
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    }
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Footer Link */
+    .footer-link {
+      text-align: center;
+      margin-top: 25px;
+      color: #666;
+      font-size: 14px;
+    }
+    .footer-link a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+    .footer-link a:hover {
+      color: #764ba2;
+      text-decoration: underline;
+    }
+
+    /* Terms */
+    .terms {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #666;
+    }
+    .terms input[type="checkbox"] {
+      margin-top: 3px;
+      cursor: pointer;
+    }
+    .terms a {
+      color: #667eea;
+      text-decoration: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .register-container {
+        padding: 40px 25px;
+      }
+      .title {
+        font-size: 28px;
+      }
+      .back-btn {
+        padding: 8px 15px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Animation -->
+  <div class="bg-animation">
+    <div class="float-icon icon-1">🚑</div>
+    <div class="float-icon icon-2">🏥</div>
+    <div class="float-icon icon-3">🩺</div>
+    <div class="float-icon icon-4">💊</div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="cportal.html" class="back-btn">
+    <span>←</span> Back
+  </a>
+
+  <!-- Registration Form -->
+  <div class="register-container">
+    <div class="header">
+      <div class="logo-icon">👤</div>
+      <h1 class="title">Create Account</h1>
+      <p class="subtitle">Join Hope On Wheel as a Customer</p>
+    </div>
+
+    <form onsubmit="handleRegister(event)">
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <input type="text" class="form-input" placeholder="Enter your full name" required>
+        <span class="input-icon">👤</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" placeholder="Enter your email" required>
+        <span class="input-icon">📧</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Phone Number</label>
+        <input type="tel" class="form-input" placeholder="Enter your phone number" required>
+        <span class="input-icon">📱</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Address</label>
+        <input type="text" class="form-input" placeholder="Enter your address" required>
+        <span class="input-icon">📍</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" placeholder="Create a password" required>
+        <span class="input-icon">🔒</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <input type="password" class="form-input" placeholder="Confirm your password" required>
+        <span class="input-icon">🔒</span>
+      </div>
+
+      <div class="terms">
+        <input type="checkbox" id="terms" required>
+        <label for="terms">I agree to the <a href="#" target="_blank">Terms & Conditions</a> and <a href="#" target="_blank">Privacy Policy</a></label>
+      </div>
+
+      <button type="button" class="submit-btn" onclick="window.location.href='customerdashboard.html'">
+  Create Account
+</button>
+
+    </form>
+
+    <div class="footer-link">
+      Already have an account? <a href="login.html">Login here</a>
+    </div>
+  </div>
+
+  <script>
+    function handleRegister(e) {
+      e.preventDefault();
+      alert('Registration successful! Redirecting to login page...');
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

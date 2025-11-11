@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMT Driver Dashboard</title>
+    <!--  Leaflet: free map library  -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card .value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .stat-card .label {
+            color: #999;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* Active Request Card */
+        .active-request {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .priority-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            float: right;
+            animation: pulse 2s infinite;
+        }
+
+        .request-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .request-header h2 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        .alert-icon {
+            color: #ff6b6b;
+            margin-right: 10px;
+            font-size: 28px;
+            animation: shake 0.5s ease-in-out infinite;
+        }
+
+        .request-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .detail-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .detail-item label {
+            display: block;
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .detail-item .value {
+            color: #333;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 18px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-accept {
+            background: #51cf66;
+            color: white;
+        }
+
+        .btn-accept:hover {
+            background: #40c057;
+        }
+
+        .btn-navigate {
+            background: #339af0;
+            color: white;
+        }
+
+        .btn-navigate:hover {
+            background: #228be6;
+        }
+
+        .btn-complete {
+            background: #5c7cfa;
+            color: white;
+        }
+
+        .btn-complete:hover {
+            background: #4c6ef5;
+        }
+
+        .btn-reject {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-reject:hover {
+            background: #fa5252;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Incoming Requests */
+        .incoming-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        .incoming-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .request-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .request-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .request-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .request-info h3 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .request-info p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .emergency-type {
+            background: #ffd43b;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Status Messages */
+        .status-message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: center;
+            animation: slideInDown 0.5s ease-out;
+        }
+
+        .status-accepted {
+            background: #d3f9d8;
+            color: #2b8a3e;
+        }
+
+        .status-navigating {
+            background: #d0ebff;
+            color: #1864ab;
+        }
+
+        .status-completed {
+            background: #e7f5ff;
+            color: #1971c2;
+        }
+
+        /* Tracking View */
+        .tracking-view {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .route-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .route-item {
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .route-item .icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .route-item .label {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .route-item .value {
+            color: #333;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Leaflet custom styles */
+        .leaflet-popup-content-wrapper {
+            border-radius: 10px;
+        }
+
+        .ambulance-icon {
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Trips Today</h3>
+                <div class="value">15</div>
+            </div>
+            <div class="stat-card">
+                <h3>Your Rating</h3>
+                <div class="value">4.9</div>
+            </div>
+            <div class="stat-card">
+                <h3>Hours Online</h3>
+                <div class="value">8.5h</div>
+            </div>
+        </div>
+
+        <!-- Active Request Section -->
+        <div class="active-request" id="activeRequest">
+            <div class="request-header">
+                <span class="alert-icon">⚠</span>
+                <h2>Active Request</h2>
+                <span class="priority-badge">HIGH PRIORITY</span>
+            </div>
+
+            <div class="request-details">
+                <div class="detail-item">
+                    <label>Patient Name</label>
+                    <div class="value">Sarah Williams</div>
+                </div>
+                <div class="detail-item">
+                    <label>Emergency Type</label>
+                    <div class="value">Cardiac Emergency</div>
+                </div>
+                <div class="detail-item">
+                    <label>Pickup Location</label>
+                    <div class="value">123 Main Street, Downtown</div>
+                </div>
+                <div class="detail-item">
+                    <label>Distance</label>
+                    <div class="value">2.5 km away</div>
+                </div>
+                <div class="detail-item">
+                    <label>Destination</label>
+                    <div class="value">City General Hospital</div>
+                </div>
+                <div class="detail-item">
+                    <label>Contact Number</label>
+                    <div class="value">+94 123-4567</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-accept" id="acceptBtn" onclick="acceptRequest()">
+                    ✓ Accept Request
+                </button>
+                <button class="btn btn-navigate" id="navigateBtn" onclick="startNavigation()" disabled>
+                    🧭 Start Navigation
+                </button>
+                <button class="btn btn-complete" id="completeBtn" onclick="completeTrip()" disabled>
+                    ✓ Complete Trip
+                </button>
+                <button class="btn btn-reject" id="rejectBtn" onclick="rejectRequest()">
+                    ✗ Reject
+                </button>
+            </div>
+
+            <div id="statusMessage" class="hidden"></div>
+        </div>
+
+        <!-- Tracking View (Hidden Initially) -->
+        <div class="tracking-view hidden" id="trackingView">
+            <h2>🚑 Tracking Patient: Sarah Williams</h2>
+            <div id="map"></div>
+            <div class="route-info">
+                <div class="route-item">
+                    <div class="icon">📍</div>
+                    <div class="label">Your Location</div>
+                    <div class="value" id="currentLocation">Getting location...</div>
+                </div>
+                <div class="route-item">
+                    <div class="icon">⏱</div>
+                    <div class="label">ETA</div>
+                    <div class="value" id="eta">Calculating...</div>
+                </div>
+                <div class="route-item">
+                    <div class="icon">🛣</div>
+                    <div class="label">Distance</div>
+                    <div class="value" id="distance">Calculating...</div>
+                </div>
+                <div class="route-item">
+                    <div class="icon">🏥</div>
+                    <div class="label">Destination</div>
+                    <div class="value">City Hospital</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Incoming Requests -->
+        <div class="incoming-section">
+            <h2>Incoming Requests (3)</h2>
+            <div class="request-list">
+                <div class="request-item">
+                    <div class="request-info">
+                        <h3>John Anderson</h3>
+                        <p>📍 456 Oak Avenue</p>
+                    </div>
+                    <span class="emergency-type">Stroke</span>
+                </div>
+                <div class="request-item">
+                    <div class="request-info">
+                        <h3>Maria Garcia</h3>
+                        <p>📍 789 Pine Street</p>
+                    </div>
+                    <span class="emergency-type">Injury</span>
+                </div>
+                <div class="request-item">
+                    <div class="request-info">
+                        <h3>Robert Chen</h3>
+                        <p>📍 321 Elm Road</p>
+                    </div>
+                    <span class="emergency-type">Respiratory</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let requestStatus = 'pending';
+        let map;
+        let userMarker;
+        let patientMarker;
+        let hospitalMarker;
+        let routeLine;
+
+        // Patient location (123 Main Street, Downtown - example coordinates)
+        const patientLocation = [6.9271, 79.8612]; // Colombo city center
+        // Hospital location (example)
+        const hospitalLocation = [6.9150, 79.8753]; // Near Colombo
+
+        function acceptRequest() {
+            requestStatus = 'accepted';
+            document.getElementById('acceptBtn').disabled = true;
+            document.getElementById('navigateBtn').disabled = false;
+            document.getElementById('rejectBtn').disabled = true;
+            
+            showStatus('Request Accepted! You can now start navigation.', 'status-accepted');
+        }
+
+        function startNavigation() {
+            requestStatus = 'navigating';
+            document.getElementById('navigateBtn').disabled = true;
+            document.getElementById('completeBtn').disabled = false;
+            
+            // Show tracking view
+            document.getElementById('trackingView').classList.remove('hidden');
+            
+            showStatus('Navigation Started! Tracking patient location...', 'status-navigating');
+            
+            // Initialize map after showing the tracking view
+            setTimeout(() => {
+                initializeMap();
+                document.getElementById('trackingView').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function initializeMap() {
+            // Create the map centered on patient location
+            map = L.map('map').setView(patientLocation, 13);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add patient marker
+            patientMarker = L.marker(patientLocation).addTo(map)
+                .bindPopup("🏠 <b>Patient Location</b><br>Sarah Williams<br>123 Main Street").openPopup();
+
+            // Add hospital marker
+            hospitalMarker = L.marker(hospitalLocation).addTo(map)
+                .bindPopup("🏥 <b>City General Hospital</b><br>Destination");
+
+            // Get user's current location
+            map.locate({setView: false, maxZoom: 16});
+
+            // When location is found
+            map.on('locationfound', onLocationFound);
+
+            // If location fails
+            map.on('locationerror', onLocationError);
+        }
+
+        function onLocationFound(e) {
+            const userLocation = e.latlng;
+
+            // Add user marker (ambulance)
+            if (userMarker) {
+                map.removeLayer(userMarker);
+            }
+            userMarker = L.marker(userLocation).addTo(map)
+                .bindPopup("🚑 <b>Your Location</b><br>Ambulance").openPopup();
+
+            // Add accuracy circle
+            L.circle(userLocation, {
+                radius: e.accuracy / 2,
+                color: '#339af0',
+                fillColor: '#339af0',
+                fillOpacity: 0.2
+            }).addTo(map);
+
+            // Draw route line from user to patient to hospital
+            if (routeLine) {
+                map.removeLayer(routeLine);
+            }
+            routeLine = L.polyline([
+                userLocation,
+                patientLocation,
+                hospitalLocation
+            ], {
+                color: '#ff6b6b',
+                weight: 4,
+                opacity: 0.7,
+                dashArray: '10, 10'
+            }).addTo(map);
+
+            // Fit map to show all markers
+            const group = L.featureGroup([userMarker, patientMarker, hospitalMarker]);
+            map.fitBounds(group.getBounds().pad(0.1));
+
+            // Calculate and display distance
+            const distanceToPatient = calculateDistance(userLocation, patientLocation);
+            const distanceToHospital = calculateDistance(patientLocation, hospitalLocation);
+            const totalDistance = distanceToPatient + distanceToHospital;
+
+            document.getElementById('distance').textContent = totalDistance.toFixed(2) + ' km';
+            document.getElementById('eta').textContent = Math.ceil(totalDistance * 3) + ' mins';
+            document.getElementById('currentLocation').textContent = 'Tracking...';
+
+            // Simulate movement (update location every 5 seconds)
+            startLocationTracking();
+        }
+
+        function onLocationError(e) {
+            alert("Could not get your location: " + e.message);
+            // Use default location if geolocation fails
+            const defaultLocation = [6.9271, 79.8612];
+            userMarker = L.marker(defaultLocation).addTo(map)
+                .bindPopup("🚑 <b>Your Location (Default)</b><br>Ambulance");
+            
+            document.getElementById('currentLocation').textContent = 'Location unavailable';
+        }
+
+        function calculateDistance(latlng1, latlng2) {
+            // Calculate distance in kilometers
+            const lat1 = latlng1.lat || latlng1[0];
+            const lon1 = latlng1.lng || latlng1[1];
+            const lat2 = latlng2[0];
+            const lon2 = latlng2[1];
+
+            const R = 6371; // Earth's radius in km
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                    Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function startLocationTracking() {
+            // Update location every 5 seconds
+            setInterval(() => {
+                if (requestStatus === 'navigating') {
+                    map.locate({setView: false, maxZoom: 16});
+                }
+            }, 5000);
+        }
+
+        function completeTrip() {
+            requestStatus = 'completed';
+            document.getElementById('completeBtn').disabled = true;
+            
+            showStatus('Trip Completed Successfully! Great job! 🎉', 'status-completed');
+            
+            // Reset after 3 seconds
+            setTimeout(() => {
+                resetDashboard();
+            }, 3000);
+        }
+
+        function rejectRequest() {
+            if(confirm('Are you sure you want to reject this request?')) {
+                showStatus('Request Rejected', 'status-rejected');
+                setTimeout(() => {
+                    resetDashboard();
+                }, 2000);
+            }
+        }
+
+        function showStatus(message, className) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.textContent = message;
+            statusDiv.className = 'status-message ' + className;
+            statusDiv.classList.remove('hidden');
+        }
+
+        function resetDashboard() {
+            location.reload();
+        }
+    </script>
+</body>
+</html>

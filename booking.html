@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Ambulance - Hope On Wheel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.97);
+      padding: 20px 30px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+    .back-btn {
+      background: #f5f5f5;
+      color: #666;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .back-btn:hover {
+      background: #e0e0e0;
+    }
+    .header-title {
+      font-size: 24px;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Booking Form */
+    .booking-card {
+      background: rgba(255, 255, 255, 0.97);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.6s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+    }
+    .form-section h3 {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #f5576c;
+      box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    /* Ambulance Type Selection */
+    .ambulance-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .ambulance-option {
+      border: 2px solid #e0e0e0;
+      padding: 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+    .ambulance-option:hover {
+      border-color: #f5576c;
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .ambulance-option.selected {
+      border-color: #f5576c;
+      background: linear-gradient(135deg, #f093fb10 0%, #f5576c10 100%);
+    }
+    .ambulance-option .icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+    .ambulance-option .name {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+    }
+    .ambulance-option .price {
+      color: #f5576c;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    /* Location Button */
+    .location-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .location-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 18px;
+      border-radius: 12px;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 30px;
+    }
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+    }
+
+    /* Info Box */
+    .info-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      color: #856404;
+    }
+    .info-box strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        gap: 15px;
+      }
+      .booking-card {
+        padding: 25px;
+      }
+      .ambulance-types {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1 class="header-title">🚑 Book Ambulance</h1>
+      <button class="back-btn" onclick="window.location.href='customerdashboard.html'">← Back to Dashboard</button>
+    </div>
+
+    <!-- Booking Form -->
+    <div class="booking-card">
+      <form id="bookingForm">
+        <!-- Patient Information -->
+        <div class="form-section">
+          <h3>👤 Patient Information</h3>
+          <div class="form-group">
+            <label for="patientName">Patient Name *</label>
+            <input type="text" id="patientName" required placeholder="Enter patient full name">
+          </div>
+          <div class="form-group">
+            <label for="patientAge">Age *</label>
+            <input type="number" id="patientAge" required placeholder="Enter patient age" min="1" max="120">
+          </div>
+          <div class="form-group">
+            <label for="patientPhone">Contact Number *</label>
+            <input type="tel" id="patientPhone" required placeholder="+94 123-4567">
+          </div>
+          <div class="form-group">
+            <label for="medicalCondition">Medical Condition / Emergency Type *</label>
+            <textarea id="medicalCondition" required placeholder="Describe the emergency situation..."></textarea>
+          </div>
+        </div>
+
+        <!-- Ambulance Type -->
+        <div class="form-section">
+          <h3>🚑 Select Ambulance Type</h3>
+          <div class="ambulance-types">
+            <div class="ambulance-option" data-type="basic" data-price="150">
+              <div class="icon">🚑</div>
+              <div class="name">Basic Ambulance</div>
+              <p style="font-size: 12px; color: #999; margin-top: 5px;">Standard emergency transport</p>
+            </div>
+            <div class="ambulance-option" data-type="advanced" data-price="300">
+              <div class="icon">🏥</div>
+              <div class="name">Advanced Life Support</div>
+              <p style="font-size: 12px; color: #999; margin-top: 5px;">Advanced medical equipment</p>
+            </div>
+            <div class="ambulance-option" data-type="icu" data-price="500">
+              <div class="icon">⚕</div>
+              <div class="name">ICU Ambulance</div>
+              <p style="font-size: 12px; color: #999; margin-top: 5px;">Critical care transport</p>
+            </div>
+          </div>
+          <input type="hidden" id="ambulanceType" required>
+          <input type="hidden" id="ambulancePrice">
+        </div>
+
+        <!-- Location Information -->
+        <div class="form-section">
+          <h3>📍 Location Details</h3>
+          <div class="form-group">
+            <label for="pickupAddress">Pickup Address *</label>
+            <input type="text" id="pickupAddress" required placeholder="Enter pickup location">
+            <button type="button" class="location-btn" onclick="getLocation()">📍 Use Current Location</button>
+          </div>
+          <div class="form-group">
+            <label for="destinationAddress">Destination Hospital *</label>
+            <input type="text" id="destinationAddress" required placeholder="Enter hospital name or address">
+          </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="form-section">
+          <h3>📝 Additional Information</h3>
+          <div class="form-group">
+            <label for="specialInstructions">Special Instructions (Optional)</label>
+            <textarea id="specialInstructions" placeholder="Any special requirements or instructions..."></textarea>
+          </div>
+        </div>
+
+        <!-- Info Box -->
+        <div class="info-box">
+          <strong>⚡ Quick Response</strong>
+          Our ambulance will reach you within 10-15 minutes. For immediate emergency, call 911.
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" class="submit-btn" onclick="window.location.href='track.html'">🚑 Confirm Booking</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Ambulance Type Selection
+    const ambulanceOptions = document.querySelectorAll('.ambulance-option');
+    const ambulanceTypeInput = document.getElementById('ambulanceType');
+    const ambulancePriceInput = document.getElementById('ambulancePrice');
+
+    ambulanceOptions.forEach(option => {
+      option.addEventListener('click', function() {
+        ambulanceOptions.forEach(opt => opt.classList.remove('selected'));
+        this.classList.add('selected');
+        ambulanceTypeInput.value = this.dataset.type;
+        ambulancePriceInput.value = this.dataset.price;
+      });
+    });
+
+    // Get Current Location
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            document.getElementById('pickupAddress').value = Lat: ${lat.toFixed(4)}, Lng: ${lng.toFixed(4)};
+            alert('Location captured! In a real app, this would be converted to an address.');
+          },
+          error => {
+            alert('Unable to get location. Please enter address manually.');
+          }
+        );
+      } else {
+        alert('Geolocation is not supported by this browser.');
+      }
+    }
+
+    // Form Submission
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate ambulance type selection
+      if (!ambulanceTypeInput.value) {
+        alert('Please select an ambulance type!');
+        return;
+      }
+
+      // Create booking object
+      const booking = {
+        bookingId: 'AMB' + Date.now(),
+        patientName: document.getElementById('patientName').value,
+        patientAge: document.getElementById('patientAge').value,
+        patientPhone: document.getElementById('patientPhone').value,
+        medicalCondition: document.getElementById('medicalCondition').value,
+        ambulanceType: ambulanceTypeInput.value,
+        ambulancePrice: ambulancePriceInput.value,
+        pickupAddress: document.getElementById('pickupAddress').value,
+        destinationAddress: document.getElementById('destinationAddress').value,
+        specialInstructions: document.getElementById('specialInstructions').value,
+        bookingTime: new Date().toISOString(),
+        status: 'pending'
+      };
+
+      // Save to localStorage
+      localStorage.setItem('currentBooking', JSON.stringify(booking));
+
+      // Show confirmation and redirect
+      alert('Booking Confirmed! 🎉\n\nBooking ID: ' + booking.bookingId + '\n\nYour ambulance will arrive in 10-15 minutes.\nYou can track it in real-time.');
+      
+      // Redirect to tracking page
+      window.location.href = 'track.html';
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Customer Portal - Hope On Wheel</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Animated Background Elements */
+    .bg-animation {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+    .ambulance-float {
+      position: absolute;
+      font-size: 60px;
+      opacity: 0.1;
+      animation: float 8s ease-in-out infinite;
+    }
+    .ambulance-1 { top: 10%; left: 15%; animation-delay: 0s; }
+    .ambulance-2 { top: 70%; right: 20%; animation-delay: 2s; }
+    .ambulance-3 { bottom: 15%; left: 25%; animation-delay: 4s; }
+    .ambulance-4 { top: 40%; right: 10%; animation-delay: 6s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(-5deg); }
+      50% { transform: translateY(-30px) rotate(5deg); }
+    }
+
+    /* Medical Cross Animation */
+    .cross-icon {
+      position: absolute;
+      font-size: 40px;
+      opacity: 0.08;
+      animation: spin 10s linear infinite;
+    }
+    .cross-1 { top: 20%; left: 40%; animation-delay: 0s; }
+    .cross-2 { bottom: 30%; right: 35%; animation-delay: 3s; }
+    .cross-3 { top: 60%; left: 10%; animation-delay: 6s; }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Back Button */
+    .back-btn {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 12px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+    .back-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+    }
+
+    /* Main Container */
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    /* Logo Section */
+    .logo-section {
+      margin-bottom: 40px;
+      animation: fadeInDown 0.8s ease;
+    }
+    .logo-icon {
+      font-size: 80px;
+      margin-bottom: 15px;
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .logo-text {
+      font-size: 36px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: 10px;
+    }
+    .subtitle {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.9);
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Title */
+    .title {
+      font-size: 42px;
+      color: white;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      animation: fadeInDown 1s ease;
+    }
+    .description {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.95);
+      margin-bottom: 50px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+      animation: fadeInDown 1.2s ease;
+    }
+
+    /* Choice Cards */
+    .choice-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .choice-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 30px;
+      padding: 50px 40px;
+      transition: all 0.4s ease;
+      cursor: pointer;
+      border: 3px solid transparent;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      animation: fadeInUp 1s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .choice-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    .choice-card:hover::before {
+      left: 100%;
+    }
+    .choice-card:hover {
+      transform: translateY(-15px) scale(1.05);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      border-color: #ff6b81;
+    }
+
+    .card-icon {
+      font-size: 80px;
+      margin-bottom: 25px;
+      display: inline-block;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+    .choice-card:hover .card-icon {
+      animation: rotate 0.6s ease;
+    }
+    @keyframes rotate {
+      0% { transform: rotate(0deg) scale(1); }
+      50% { transform: rotate(10deg) scale(1.2); }
+      100% { transform: rotate(0deg) scale(1); }
+    }
+
+    .card-title {
+      font-size: 28px;
+      color: #333;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .card-description {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .card-btn {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      border: none;
+      padding: 15px 40px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(245, 87, 108, 0.3);
+    }
+    .card-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(245, 87, 108, 0.5);
+    }
+
+    .new-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      animation: blink 2s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .back-btn { top: 15px; left: 15px; padding: 10px 20px; font-size: 14px; }
+      .logo-icon { font-size: 60px; }
+      .logo-text { font-size: 28px; }
+      .title { font-size: 32px; }
+      .description { font-size: 16px; }
+      .choice-container { grid-template-columns: 1fr; gap: 25px; }
+      .choice-card { padding: 40px 30px; }
+      .card-icon { font-size: 60px; }
+      .card-title { font-size: 24px; }
+      .ambulance-float { font-size: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background Animations -->
+  <div class="bg-animation">
+    <div class="ambulance-float ambulance-1">🚑</div>
+    <div class="ambulance-float ambulance-2">🚑</div>
+    <div class="ambulance-float ambulance-3">🚑</div>
+    <div class="ambulance-float ambulance-4">🚑</div>
+    <div class="cross-icon cross-1">➕</div>
+    <div class="cross-icon cross-2">➕</div>
+    <div class="cross-icon cross-3">➕</div>
+  </div>
+
+  <!-- Back Button -->
+  <a href="index.html" class="back-btn">
+    <span>←</span> Back to Home
+  </a>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <div class="logo-icon">🚑</div>
+      <div class="logo-text">Hope On Wheel</div>
+      <div class="subtitle">Emergency Ambulance Service</div>
+    </div>
+
+    <!-- Title -->
+    <h1 class="title">Welcome, Customer!</h1>
+    <p class="description">Choose an option below to continue</p>
+
+    <!-- Choice Cards -->
+    <div class="choice-container">
+      <!-- Register Card -->
+      <div class="choice-card" onclick="location.href='customerregister.html'">
+        <span class="new-badge">NEW USER</span>
+        <div class="card-icon">📝</div>
+        <h2 class="card-title">Create Account</h2>
+        <p class="card-description">New to Hope On Wheel? Register now to access our emergency ambulance services and save lives.</p>
+        <button class="card-btn">Register Now</button>
+      </div>
+
+      <!-- Login Card -->
+      <div class="choice-card" onclick="location.href='customerlogin.html'">
+        <div class="card-icon">🔐</div>
+        <h2 class="card-title">Login</h2>
+        <p class="card-description">Already have an account? Sign in to access your dashboard and request emergency services instantly.</p>
+        <button class="card-btn">Login Now</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Add click animation effect
+    document.querySelectorAll('.choice-card').forEach(card => {
+      card.addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 200);
+      });
+    });
+  </script>
+</body>
+</html>

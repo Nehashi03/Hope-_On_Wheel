@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8fab 50%, #ffa8c5 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-profile {
+            background: linear-gradient(135deg, #da6ba6, #e88ab8);
+            color: white;
+        }
+
+        .btn-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(218, 107, 166, 0.4);
+        }
+
+        .btn-logout {
+            background: linear-gradient(135deg, #f5a087, #f8b499);
+            color: white;
+        }
+
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 160, 135, 0.4);
+        }
+
+        .rating-card {
+            background: linear-gradient(135deg, #ffeef5, #fff5f9);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .rating {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff8fab;
+            margin-bottom: 10px;
+        }
+
+        .rating-label {
+            color: #666;
+            font-size: 18px;
+        }
+
+        .medical-records {
+            background: linear-gradient(135deg, #f0f0f0, #f8f8f8);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .medical-records:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .medical-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .medical-records h3 {
+            color: #333;
+            font-size: 22px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Welcome Back!</h1>
+        </div>
+
+        <div class="button-group">
+            <button class="btn btn-profile">
+                <span>👤</span> Profile
+            </button>
+            <button class="btn btn-logout" onclick="logout()">
+                <span>🚪</span> Logout
+            </button>
+        </div>
+
+        <div class="rating-card">
+            <div class="rating">4.8★</div>
+            <div class="rating-label">Your Rating</div>
+        </div>
+
+        <div class="medical-records" onclick="viewMedicalRecords()">
+            <div class="medical-icon">🏥</div>
+            <h3>Medical Records</h3>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            // Optional: Clear any session data
+            // sessionStorage.clear();
+            // localStorage.clear();
+            
+            // Show confirmation (optional)
+            if (confirm('Are you sure you want to logout?')) {
+                // Redirect to index.html
+                window.location.href = 'index.html';
+            }
+        }
+
+        function viewMedicalRecords() {
+            alert('Opening Medical Records...');
+            // You can redirect to a medical records page
+            // window.location.href = 'medical-records.html';
+        }
+    </script>
+</body>
+</html>

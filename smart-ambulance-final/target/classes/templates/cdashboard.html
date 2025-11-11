@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Dashboard - Hope On Wheel</title>
+
+    <!-- Link to CSS -->
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/cdashboard.css" />
+</head>
+<body>
+<!-- Header -->
+<div class="header">
+    <div class="header-left">
+        <div class="logo">🚑</div>
+        <div class="welcome-text">
+            <h2>Welcome, John Doe!</h2>
+            <p>Hope On Wheel - Your Emergency Partner</p>
+        </div>
+    </div>
+    <div class="header-right">
+        <button class="profile-btn" id="profileBtn">👤 Profile</button>
+        <button class="logout-btn" id="logoutBtn">🚪 Logout</button>
+    </div>
+</div>
+
+<!-- Emergency Banner -->
+<div class="emergency-banner">
+    <div class="icon">🚨</div>
+    <h3>Medical Emergency?</h3>
+    <p>Get instant ambulance service at your location</p>
+    <button class="emergency-call-btn" id="emergencyBtn">📞 Call 911 Now</button>
+</div>
+
+<!-- Stats Grid -->
+<div class="stats-grid">
+    <div class="stat-box"><div class="stat-number">12</div><div class="stat-label">Total Bookings</div></div>
+    <div class="stat-box"><div class="stat-number">2</div><div class="stat-label">Active Trips</div></div>
+    <div class="stat-box"><div class="stat-number">4.8★</div><div class="stat-label">Your Rating</div></div>
+</div>
+
+<!-- Quick Actions -->
+<div class="quick-actions">
+    <div class="action-card" id="bookBtn">
+        <div class="icon">🚑</div>
+        <h3>Book Ambulance</h3>
+        <p>Request emergency ambulance service now</p>
+    </div>
+
+    <div class="action-card" id="trackBtn"><div class="icon">📍</div><h3>Track Live</h3><p>Track your ambulance in real-time</p></div>
+    <div class="action-card" id="historyBtn"><div class="icon">📋</div><h3>Booking History</h3><p>View all your past bookings</p></div>
+    <div class="action-card" id="recordsBtn"><div class="icon">🏥</div><h3>Medical Records</h3><p>Access your medical information</p></div>
+</div>
+
+<!-- Status Section -->
+<div class="status-section">
+</div>
+
+
+<script src="/js/cdashboard.js"></script>

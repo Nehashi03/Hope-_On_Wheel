@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Login - Hope On Wheel</title>
+    <link rel="stylesheet" href="/css/clogin.css" />
+</head>
+<body>
+<!-- Background Animation -->
+<div class="bg-animation">
+    <div class="float-icon icon-1">🚑</div>
+    <div class="float-icon icon-2">❤</div>
+    <div class="float-icon icon-3">🏥</div>
+</div>
+
+<!-- Back Button -->
+<a href="index.html" class="back-btn">
+    <span>←</span> Back
+</a>
+
+<!-- Login Form -->
+<div class="login-container">
+    <div class="header">
+        <div class="logo-icon">🔐</div>
+        <h1 class="title">Welcome Back!</h1>
+        <p class="subtitle">Login to your customer account</p>
+    </div>
+
+    <div class="emergency-banner">
+        <div class="icon">🚨</div>
+        <div class="text">Emergency? Call 911 immediately for instant help</div>
+    </div>
+
+    <form method="post" action="/login">
+        <div class="form-group">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-input" placeholder="Enter your username" required>
+            <span class="input-icon">📧</span>
+
+            <label class="form-label">Password</label>
+            <input type="password" name="password" class="form-input" placeholder="Enter your password" required>
+            <span class="input-icon">🔒</span>
+        </div>
+
+        <button type="submit" class="submit-btn">Login to Dashboard</button>
+    </form>
+
+
+    <div class="footer-link">
+        Don't have an account? <a href="cregister.html">Register here</a>
+    </div>
+</div>
+
+<!-- Custom Alert Popup -->
+<div class="alert-overlay" id="alertOverlay">
+    <div class="alert-box">
+        <h3>This page says</h3>
+        <p>Login successful! Redirecting to dashboard...</p>
+        <button class="alert-ok-btn" onclick="redirectToDashboard()">OK</button>
+    </div>
+</div>
+
+<script src="/js/clogin.js"></script>
+</body>
+</html>

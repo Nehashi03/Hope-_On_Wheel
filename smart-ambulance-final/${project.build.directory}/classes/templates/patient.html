@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Patient Dashboard</title>
+</head>
+<body>
+<h2>Welcome, Patient</h2>
+<a href="/logout">Logout</a>
+
+<h3>Create Booking</h3>
+<form th:action="@{/patient/book}" method="post">
+    <label>Hospital:</label>
+    <select name="hospitalName" required>
+        <option th:each="h : ${hospitals}" th:text="${h.name}" th:value="${h.name}"></option>
+    </select>
+    <button type="submit">Book Ambulance</button>
+</form>
+
+<h3>Your Bookings</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Hospital</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b : ${bookings}">
+        <td th:text="${b.id}"></td>
+        <td th:text="${b.hospital}"></td>
+        <td th:text="${b.status}"></td>
+        <td>
+            <a th:if="${b.status.name() == 'ASSIGNED'}" th:href="@{'/patient/active/' + ${b.id}}">Track Ambulance</a>
+            <span th:if="${b.status.name() != 'ASSIGNED'}">—</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

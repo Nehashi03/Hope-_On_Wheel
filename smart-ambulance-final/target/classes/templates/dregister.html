@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Driver Registration - Hope On Wheel</title>
+    <link rel="stylesheet" href="/css/dregister.css">
+</head>
+<body>
+<!-- Background Animation -->
+<div class="bg-animation">
+    <div class="float-icon icon-1">🚑</div>
+    <div class="float-icon icon-2">🚗</div>
+    <div class="float-icon icon-3">🚙</div>
+</div>
+
+<!-- Back Button -->
+<a href="driverportalchoos.html" class="back-btn">
+    <span>←</span> Back
+</a>
+
+<!-- Registration Form -->
+<div class="register-container">
+    <div class="header">
+        <div class="logo-icon">🚙</div>
+        <h1 class="title">Become a Driver</h1>
+        <p class="subtitle">Join our team and save lives</p>
+    </div>
+
+    <div class="info-banner">
+        <div class="title-text">
+            <span>✓</span> Driver Requirements
+        </div>
+        <div class="text">Valid driver's license, clean driving record, ambulance driving experience preferred, must pass background check</div>
+    </div>
+
+    <form id="driverForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" placeholder="First name" required>
+                <span class="input-icon">👤</span>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-input" placeholder="Last name" required>
+                <span class="input-icon">👤</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="Enter your email" required>
+            <span class="input-icon">📧</span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" placeholder="Enter your phone number" required>
+            <span class="input-icon">📱</span>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Driver's License Number</label>
+            <input type="text" class="form-input" placeholder="Enter license number" required>
+            <span class="input-icon">🪪</span>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">License State</label>
+                <select class="form-select" required>
+                    <option value="">Select state</option>
+                    <option value="CA">California</option>
+                    <option value="NY">New York</option>
+                    <option value="TX">Texas</option>
+                    <option value="FL">Florida</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Years of Experience</label>
+                <input type="number" class="form-input" placeholder="Years" min="0" required>
+                <span class="input-icon">📅</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Vehicle Type</label>
+            <select class="form-select" required>
+                <option value="">Select vehicle type</option>
+                <option value="basic">Basic Ambulance</option>
+                <option value="als">Advanced Life Support (ALS)</option>
+                <option value="icu">ICU Ambulance</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Address</label>
+            <input type="text" class="form-input" placeholder="Enter your address" required>
+            <span class="input-icon">📍</span>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Create password" required>
+                <span class="input-icon">🔒</span>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-input" placeholder="Confirm password" required>
+                <span class="input-icon">🔒</span>
+            </div>
+        </div>
+
+        <div class="terms">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to the <a href="#" target="_blank">Terms & Conditions</a>, <a href="#" target="_blank">Driver Agreement</a> and <a href="#" target="_blank">Privacy Policy</a></label>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Application</button>
+    </form>
+
+    <div class="footer-link">
+        Already registered? <a href="driverlogin.html">Login here</a>
+    </div>
+</div>
+
+<script src="/js/dregister.js"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Driver Dashboard</title>
+</head>
+<body>
+<h2>Welcome, Driver</h2>
+<a href="/logout">Logout</a>
+
+<h3>Your Assigned Bookings</h3>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Patient</th>
+        <th>Hospital</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="b : ${bookings}">
+        <td th:text="${b.id}"></td>
+        <td th:text="${b.patient.name}"></td>
+        <td th:text="${b.hospital}"></td>
+        <td th:text="${b.status}"></td>
+        <td><a th:href="@{'/driver/active/' + ${b.id}}">Open Live Map</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

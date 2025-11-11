@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Customer Portal - Hope On Wheel</title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+<!-- Background Animations -->
+<div class="bg-animation">
+    <div class="ambulance-float ambulance-1">🚑</div>
+    <div class="ambulance-float ambulance-2">🚑</div>
+    <div class="ambulance-float ambulance-3">🚑</div>
+    <div class="ambulance-float ambulance-4">🚑</div>
+    <div class="cross-icon cross-1">➕</div>
+    <div class="cross-icon cross-2">➕</div>
+    <div class="cross-icon cross-3">➕</div>
+</div>
+
+<!-- Back Button -->
+<a href="index.html" class="back-btn">
+    <span>←</span> Back to Home
+</a>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+        <div class="logo-icon">🚑</div>
+        <div class="logo-text">Hope On Wheel</div>
+        <div class="subtitle">Emergency Ambulance Service</div>
+    </div>
+
+    <!-- Title -->
+    <h1 class="title">Welcome, Customer!</h1>
+    <p class="description">Choose an option below to continue</p>
+
+    <!-- Choice Cards -->
+    <div class="choice-container">
+        <!-- Register Card -->
+        <div class="choice-card" onclick="location.href='customerregister.html'">
+            <span class="new-badge">NEW USER</span>
+            <div class="card-icon">📝</div>
+            <h2 class="card-title">Create Account</h2>
+            <p class="card-description">
+                New to Hope On Wheel? Register now to access our emergency ambulance services and save lives.
+            </p>
+            <button class="card-btn">Register Now</button>
+        </div>
+
+        <!-- Login Card -->
+        <div class="choice-card" onclick="location.href='customerlogin.html'">
+            <div class="card-icon">🔐</div>
+            <h2 class="card-title">Login</h2>
+            <p class="card-description">
+                Already have an account? Sign in to access your dashboard and request emergency services instantly.
+            </p>
+            <button class="card-btn">Login Now</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/script.js"></script>
+</body>
+</html>

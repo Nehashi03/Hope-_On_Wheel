@@ -1,0 +1,160 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Header */
+.header {
+  background: rgba(255, 255, 255, 0.97);
+  padding: 20px 30px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.back-btn {
+  background: #f5f5f5;
+  color: #666;
+  padding: 10px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+.back-btn:hover { background: #e0e0e0; }
+
+.header-title {
+  font-size: 24px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Booking Card */
+.booking-card {
+  background: rgba(255, 255, 255, 0.97);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.6s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-section { margin-bottom: 30px; }
+.form-section h3 { font-size: 18px; color: #333; margin-bottom: 15px; }
+
+.form-group { margin-bottom: 20px; }
+label { display: block; font-size: 14px; color: #666; margin-bottom: 8px; font-weight: 600; }
+input, select, textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: 0.3s;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #f5576c;
+  box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.1);
+}
+textarea { resize: vertical; min-height: 80px; }
+
+/* Ambulance Type */
+.ambulance-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 10px;
+}
+.ambulance-option {
+  border: 2px solid #e0e0e0;
+  padding: 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+}
+.ambulance-option:hover {
+  border-color: #f5576c;
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.ambulance-option.selected {
+  border-color: #f5576c;
+  background: linear-gradient(135deg, #f093fb10 0%, #f5576c10 100%);
+}
+.ambulance-option .icon { font-size: 40px; margin-bottom: 10px; }
+.ambulance-option .name { font-weight: 600; color: #333; margin-bottom: 5px; }
+.ambulance-option p { font-size: 12px; color: #999; margin-top: 5px; }
+
+/* Buttons */
+.location-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+.location-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  padding: 18px;
+  border-radius: 12px;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 30px;
+}
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+}
+
+/* Info Box */
+.info-box {
+  background: #fff3cd;
+  border-left: 4px solid #ffc107;
+  padding: 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  color: #856404;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header { flex-direction: column; gap: 15px; }
+  .booking-card { padding: 25px; }
+  .ambulance-types { grid-template-columns: 1fr; }
+}

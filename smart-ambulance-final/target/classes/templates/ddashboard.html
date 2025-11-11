@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EMT Driver Dashboard</title>
+
+    <!-- Leaflet Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- CSS file -->
+    <link rel="stylesheet" href="/css/ddashboars.css" />
+</head>
+<body>
+<div class="container">
+    <!-- Stats Section -->
+    <div class="stats-grid">
+        <div class="stat-card"><h3>Trips Today</h3><div class="value">15</div></div>
+        <div class="stat-card"><h3>Your Rating</h3><div class="value">4.9</div></div>
+        <div class="stat-card"><h3>Hours Online</h3><div class="value">8.5h</div></div>
+    </div>
+
+    <!-- Active Request -->
+    <div class="active-request" id="activeRequest">
+        <div class="request-header">
+            <span class="alert-icon">⚠</span>
+            <h2>Active Request</h2>
+            <span class="priority-badge">HIGH PRIORITY</span>
+        </div>
+
+        <div class="request-details">
+            <div class="detail-item"><label>Patient Name</label><div class="value">Sarah Williams</div></div>
+            <div class="detail-item"><label>Emergency Type</label><div class="value">Cardiac Emergency</div></div>
+            <div class="detail-item"><label>Pickup Location</label><div class="value">123 Main Street, Downtown</div></div>
+            <div class="detail-item"><label>Distance</label><div class="value">2.5 km away</div></div>
+            <div class="detail-item"><label>Destination</label><div class="value">City General Hospital</div></div>
+            <div class="detail-item"><label>Contact Number</label><div class="value">+94 123-4567</div></div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn btn-accept" id="acceptBtn" onclick="acceptRequest()">✓ Accept Request</button>
+            <button class="btn btn-navigate" id="navigateBtn" onclick="startNavigation()" disabled>🧭 Start Navigation</button>
+            <button class="btn btn-complete" id="completeBtn" onclick="completeTrip()" disabled>✓ Complete Trip</button>
+            <button class="btn btn-reject" id="rejectBtn" onclick="rejectRequest()">✗ Reject</button>
+        </div>
+
+        <div id="statusMessage" class="hidden"></div>
+    </div>
+
+    <!-- Tracking View -->
+    <div class="tracking-view hidden" id="trackingView">
+        <h2>🚑 Tracking Patient: Sarah Williams</h2>
+        <div id="map"></div>
+        <div class="route-info">
+            <div class="route-item"><div class="icon">📍</div><div class="label">Your Location</div><div class="value" id="currentLocation">Getting location...</div></div>
+            <div class="route-item"><div class="icon">⏱</div><div class="label">ETA</div><div class="value" id="eta">Calculating...</div></div>
+            <div class="route-item"><div class="icon">🛣</div><div class="label">Distance</div><div class="value" id="distance">Calculating...</div></div>
+            <div class="route-item"><div class="icon">🏥</div><div class="label">Destination</div><div class="value">City Hospital</div></div>
+        </div>
+    </div>
+
+    <!-- Incoming Requests -->
+    <div class="incoming-section">
+        <h2>Incoming Requests (3)</h2>
+        <div class="request-list">
+            <div class="request-item"><div class="request-info"><h3>John Anderson</h3><p>📍 456 Oak Avenue</p></div><span class="emergency-type">Stroke</span></div>
+            <div class="request-item"><div class="request-info"><h3>Maria Garcia</h3><p>📍 789 Pine Street</p></div><span class="emergency-type">Injury</span></div>
+            <div class="request-item"><div class="request-info"><h3>Robert Chen</h3><p>📍 321 Elm Road</p></div><span class="emergency-type">Respiratory</span></div>
+        </div>
+    </div>
+</div>
+
+<!-- JS file -->
+<script src="/js/ddashboard.js"></script>
+</body>
+</html>
